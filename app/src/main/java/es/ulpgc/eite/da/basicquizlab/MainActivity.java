@@ -11,10 +11,10 @@ public class MainActivity extends AppCompatActivity {
 
 
   private Button falseButton, trueButton,cheatButton, nextButton;
-  private TextView questionText, replyText;
+  private TextView questionText, replyText, preguntasCorrectas;
 
   private String[] questionArray;
-  private int questionIndex=0;
+  private int questionIndex=0, correctas =0;
   private int[] replyArray;
 
 
@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-
+    getSupportActionBar().setTitle("Question");
     initLayoutData();
     linkLayoutComponents();
     initLayoutContent();
@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     falseButton = findViewById(R.id.falseButton);
     trueButton = findViewById(R.id.trueButton);
     nextButton = findViewById(R.id.nextButton);
+    preguntasCorrectas = findViewById(R.id.preguntasCorrectas);
     //cheatButton = findViewById(R.id.cheatButton);
 
     questionText = findViewById(R.id.questionText);
@@ -56,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
     falseButton.setText(R.string.false_button_text);
     trueButton.setText(R.string.true_button_text);
     nextButton.setText(R.string.next_button_text);
+    preguntasCorrectas.setText("0");
+
     //cheatButton.setText(R.string.cheat_button_text);
 
     //TODO: refactorizar en un método este codigo repetido
@@ -77,6 +80,8 @@ public class MainActivity extends AppCompatActivity {
       trueButton.setEnabled(false);
       falseButton.setEnabled(false);
       nextButton.setEnabled(true);
+      preguntasCorrectas.setText(contarCorrectas());
+
     } else {
       // incorrect
       replyText.setText(R.string.incorrect_text);
@@ -96,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
       falseButton.setEnabled(false);
       trueButton.setEnabled(false);
       nextButton.setEnabled(true);
+      preguntasCorrectas.setText(contarCorrectas());
     } else {
       // incorrect
       replyText.setText(R.string.incorrect_text);
@@ -122,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
   public void onNextButtonClick(View view) {
     questionIndex++;
 
+
     // hacemos que si llegamos al final del quiz
     // volvamos a empezarlo nuevamente
 
@@ -142,4 +149,13 @@ public class MainActivity extends AppCompatActivity {
   public void onCheatButtonClick(View view) {
     // no implementado
   }
+
+  //metodo para contar cuentas preguuntas correctas llevamos
+   public String contarCorrectas(){
+     if(replyText.getText().equals("Correct")){
+       correctas++;
+     }
+     String buenas = String.valueOf("El número de preguntas correctas son:"+correctas);
+     return buenas;
+   }
 }
