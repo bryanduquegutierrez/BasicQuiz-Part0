@@ -1,5 +1,6 @@
 package es.ulpgc.eite.da.basicquizlab;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity extends AppCompatActivity {
 
 
-  private Button falseButton, trueButton,cheatButton, nextButton;
+  private Button falseButton, trueButton,cheatButton, nextButton, puntos;
   private TextView questionText, replyText, preguntasCorrectas;
 
   private String[] questionArray;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     linkLayoutComponents();
     initLayoutContent();
 
+
   }
 
   private void initLayoutData() {
@@ -41,7 +43,19 @@ public class MainActivity extends AppCompatActivity {
     trueButton = findViewById(R.id.trueButton);
     nextButton = findViewById(R.id.nextButton);
     preguntasCorrectas = findViewById(R.id.preguntasCorrectas);
+    puntos = findViewById(R.id.puntos);
     //cheatButton = findViewById(R.id.cheatButton);
+    puntos.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        Bundle enviarDatos = new Bundle();
+        enviarDatos.putString("keyDatos", preguntasCorrectas.getText().toString());
+
+        Intent intent = new Intent(MainActivity.this, puntuacion.class);
+        intent.putExtras(enviarDatos);
+        startActivity(intent);
+      }
+    });
 
     questionText = findViewById(R.id.questionText);
     replyText = findViewById(R.id.replyText);
@@ -58,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
     trueButton.setText(R.string.true_button_text);
     nextButton.setText(R.string.next_button_text);
     preguntasCorrectas.setText("0");
-
+    puntos.setEnabled(true);
     //cheatButton.setText(R.string.cheat_button_text);
 
     //TODO: refactorizar en un método este codigo repetido
